@@ -24,5 +24,4 @@ app.use(function (req, res, next) {
 app.use('/api/v1', routes);
 
 app.listen(3000);
-console.log('running server')
 export default app
