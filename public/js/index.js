@@ -1,5 +1,3 @@
-const url = 'http://127.0.0.1:3000/api/v1/businessDates/getBusinessDateWithDelay';
-
 const datesChannel = postal.channel('Bank Wire')
 
 const subscription = datesChannel.subscribe("businessDates", (data, envelope) => {
@@ -49,29 +47,4 @@ document.addEventListener('DOMContentLoaded', function () {
 function toastNotification(message, type){
     var toastHTML = message;
     M.toast({ html: toastHTML, classes:'danger' })
-}
-
-function businessDateWithDelayApi(initialDate, delay) {
-    const parsedDate = luxon.DateTime.fromFormat(initialDate, 'MMMM dd, yyyy').toObject()
-    const options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify({
-            initialDate: luxon.DateTime.utc(...Object.values(parsedDate)),
-            delay
-        })
-    }
-    fetch(url, options).then(function (response) {
-        // The API call was successful!
-        return response.json();
-    }).then(function (data) {
-        // This is the JSON from our response
-        datesChannel.publish("businessDates", data);
-        return data
-    }).catch(function (err) {
-        // There was an error
-        datesChannel.publish("businessDates", {error: 'Unable to retrieve business date. Please try again.'});
-    });
 }
