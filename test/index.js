@@ -7,7 +7,7 @@ const should = chai.should()
 chai.use(chaiHTTP)
 
 describe('Business Date With Delay', function () {
-    const baseUrl = '/api/v1/businessDate/getBusinessDateWithDelay'
+    const baseUrl = '/api/v1/businessDates/getBusinessDateWithDelay'
 
     describe('/POST Date', function () {
         it('It should return November 15th, 2 weekend days and 1 holiday day', done => {
@@ -16,7 +16,7 @@ describe('Business Date With Delay', function () {
                 .send({ initialDate: '2018-11-10T10:10:10Z', delay: 3 })
                 .end((err, res) => {
                     res.body.should.have.property('results');
-                    res.body.results.should.have.property('businessDate').eql('2018-11-15T10:10:10Z');
+                    res.body.results.should.have.property('businessDate').eql('2018-11-15T10:10:10.000Z');
                     res.body.results.should.have.property('weekendDays').eql(2);
                     res.body.results.should.have.property('holidayDays').eql(1);
                     done();
@@ -31,7 +31,7 @@ describe('Business Date With Delay', function () {
                 .send({ initialDate: '2018-11-15T10:10:10Z', delay: 3 })
                 .end((err, res) => {
                     res.body.should.have.property('results');
-                    res.body.results.should.have.property('businessDate').eql('2018-11-19T10:10:10Z');
+                    res.body.results.should.have.property('businessDate').eql('2018-11-19T10:10:10.000Z');
                     res.body.results.should.have.property('weekendDays').eql(2);
                     res.body.results.should.have.property('holidayDays').eql(0);
                     done();
@@ -46,7 +46,7 @@ describe('Business Date With Delay', function () {
                 .send({ initialDate: '2018-12-25T10:10:10Z', delay: 20 })
                 .end((err, res) => {
                     res.body.should.have.property('results');
-                    res.body.results.should.have.property('businessDate').eql('2019-01-18T10:10:10Z');
+                    res.body.results.should.have.property('businessDate').eql('2019-01-18T10:10:10.000Z');
                     res.body.results.should.have.property('weekendDays').eql(6);
                     res.body.results.should.have.property('holidayDays').eql(2);
                     done();
@@ -94,7 +94,7 @@ describe('Business Date With Delay', function () {
                 .get(`${baseUrl}?initialDate=2018-11-10T10:10:10Z&delay=3`)
                 .end((err, res) => {
                     res.body.should.have.property('results');
-                    res.body.results.should.have.property('businessDate').eql('2018-11-15T10:10:10Z');
+                    res.body.results.should.have.property('businessDate').eql('2018-11-15T10:10:10.000Z');
                     res.body.results.should.have.property('weekendDays').eql(2);
                     res.body.results.should.have.property('holidayDays').eql(1);
                     done();
@@ -108,7 +108,7 @@ describe('Business Date With Delay', function () {
                 .get(`${baseUrl}?initialDate=2018-11-15T10:10:10Z&delay=3`)
                 .end((err, res) => {
                     res.body.should.have.property('results');
-                    res.body.results.should.have.property('businessDate').eql('2018-11-19T10:10:10Z');
+                    res.body.results.should.have.property('businessDate').eql('2018-11-19T10:10:10.000Z');
                     res.body.results.should.have.property('weekendDays').eql(2);
                     res.body.results.should.have.property('holidayDays').eql(0);
                     done();
@@ -122,7 +122,7 @@ describe('Business Date With Delay', function () {
                 .get(`${baseUrl}?initialDate=2018-12-25T10:10:10Z&delay=20`)
                 .end((err, res) => {
                     res.body.should.have.property('results');
-                    res.body.results.should.have.property('businessDate').eql('2019-01-18T10:10:10Z');
+                    res.body.results.should.have.property('businessDate').eql('2019-01-18T10:10:10.000Z');
                     res.body.results.should.have.property('weekendDays').eql(6);
                     res.body.results.should.have.property('holidayDays').eql(2);
                     done();
