@@ -23,9 +23,14 @@ function businessDaysWithDelay(req, res) {
 
         let holidayDays = checkBankHoliday(parsedInitDate, businessDate);
         businessDate = bizniz.addDays(businessDate, holidayDays);
+
         if (checkIfHoliday(parsedInitDate)) {
+            if(delay === 0){
+                businessDate = bizniz.addDays(businessDate, 1);
+            }
             holidayDays += 1;
-        } 
+        }
+
         return res.status(201).json({
             ok: true,
             initialQuery: {

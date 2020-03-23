@@ -52,14 +52,14 @@ function toastNotification(message, type){
 }
 
 function businessDateWithDelayApi(initialDate, delay) {
-    const parsedDate = luxon.DateTime.fromFormat(initialDate, 'MMMM dd, yyyy').setLocale('en_US').toUTC()
+    const parsedDate = luxon.DateTime.fromFormat(initialDate, 'MMMM dd, yyyy').toObject()
     const options = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify({
-            initialDate: parsedDate,
+            initialDate: luxon.DateTime.utc(...Object.values(parsedDate)),
             delay
         })
     }
