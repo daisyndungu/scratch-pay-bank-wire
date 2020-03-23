@@ -2,6 +2,13 @@ import bizniz from 'bizniz';
 import { DateTime } from 'luxon';
 import Holidays from 'date-holidays';
 
+/** Return a list of objects containing all
+ * the information about all the holidays in given year
+ * for a specific country/Region
+ * 
+ * @param year - specific year of the calendar
+ * @param country - the country of the holiday calendar
+ */
 function getHolidays(year, country = 'US') {
     const countryDetails = {
         country,
@@ -15,6 +22,12 @@ function getHolidays(year, country = 'US') {
     return allHolidays;
 }
 
+/** Return the all number of bank holidays with a specific duration
+ * 
+ * @param {*} startDate - the begin of the duration
+ * @param {*} endDate - end of duration
+ * @param {*} country - the country of the holiday calendar
+ */
 function checkBankHoliday(startDate, endDate, country = 'US') {
     const startYear = DateTime.fromJSDate(startDate).year;
     const endYear = DateTime.fromJSDate(endDate).year;
@@ -33,6 +46,13 @@ function checkBankHoliday(startDate, endDate, country = 'US') {
     return totalHolidays;
 };
 
+/** Return all the holiday within a specific duration in the same year
+ * 
+ * @param startDate - begining of the period within the specified year
+ * @param endDate - end of the period within the specified year
+ * @param year - holiday calendar year
+ * @param country - country of the calendar
+ */
 function calculateHolidaysInAYear(startDate, endDate, year, country) {
     const allHolidays = getHolidays(year, country);
     let counter = 0;
@@ -47,7 +67,7 @@ function calculateHolidaysInAYear(startDate, endDate, year, country) {
                 .contains(currentDate)
         ) {
             let nextDay = bizniz.addDays(currentDate, 1);
-            // A holiday on Saturday
+            // Skip if a holiday on a Saturday
             if (holiday.substitute && bizniz.isWeekendDay(nextDay)) {
                 continue;
             }
@@ -57,6 +77,10 @@ function calculateHolidaysInAYear(startDate, endDate, year, country) {
     return counter;
 }
 
+/** Check if a given date is a holiday
+ * 
+ * @param startDate - date value inform of a JS Date object
+ */
 function checkIfHoliday(startDate) {
     const allHolidays = getHolidays(DateTime.fromJSDate(startDate).year);
     const prevDay = bizniz.addDays(startDate, -1);
