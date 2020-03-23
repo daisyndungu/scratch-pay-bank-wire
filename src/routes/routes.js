@@ -1,5 +1,7 @@
 import { Router } from 'express';
 
+import {businessDaysWithDelay} from '../controllers/businessController'
+
 const router = Router();
 
 router.get('', (req, res) => {
@@ -8,7 +10,7 @@ router.get('', (req, res) => {
 
 // Business Dates Urls
 const datesBaseUrl = '/businessDates';
-router.post(`${datesBaseUrl}/getBusinessDateWithDelay`);
-router.get(`${datesBaseUrl}/getBusinessDateWithDelay?`);
+router.post(`${datesBaseUrl}/getBusinessDateWithDelay`, businessDaysWithDelay);
+router.get(`${datesBaseUrl}/getBusinessDateWithDelay?`, businessDaysWithDelay);
 
 export default router;
